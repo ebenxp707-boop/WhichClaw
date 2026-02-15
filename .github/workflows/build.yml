@@ -1,9 +1,9 @@
 name: Build & Release
 
 on:
-  # 手动触发
+  # Manual trigger
   workflow_dispatch:
-  # 推送 tag 自动触发
+  # Auto-trigger on tag push
   push:
     tags:
       - 'v*'
@@ -11,7 +11,7 @@ on:
 env:
   NODE_VERSION: '20'
   CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-  # llama.cpp 版本号（统一管理，升级时只改这里）
+  # llama.cpp version (update here when upgrading)
   LLAMA_VERSION: 'b7981'
   LLAMA_CUDA_VER: '13.1'
 
@@ -20,17 +20,17 @@ jobs:
     strategy:
       matrix:
         include:
-          # Windows（NSIS 安装包）
+          # Windows (NSIS installer)
           - os: windows-latest
             platform: win
             target: nsis
 
-          # macOS ARM（DMG）
+          # macOS ARM (DMG)
           - os: macos-latest
             platform: mac
             target: dmg
 
-          # Linux x64（AppImage）
+          # Linux x64 (AppImage)
           - os: ubuntu-latest
             platform: linux
             target: AppImage
@@ -51,13 +51,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # llama-server 不再捆绑打包，改为运行时按需下载（见 llamaDownloader.ts）
+      # llama-server is downloaded at runtime (see llamaDownloader.ts)
 
-      # 生成图标
+      # Generate icons
       - name: Generate icons
         run: node scripts/generate-icons.mjs
 
-      # 构建前端 + 主进程
+      # Build frontend & main process
       - name: Build frontend & main process
         run: |
           npm run copy:config
@@ -65,11 +65,11 @@ jobs:
           npm run build:main
           npx vite build
 
-      # electron-builder 打包
+      # Package with electron-builder
       - name: Package with electron-builder
         run: npx electron-builder --${{ matrix.platform }} ${{ matrix.target }}
 
-      # 上传构建产物（供后续 release job 使用）
+      # Upload build artifacts (for release job)
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -83,7 +83,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # 创建 GitHub Release（仅 tag 触发时）
+  # Create GitHub Release (tag push only)
   release:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
