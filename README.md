@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>One Hub. All Models. Every Coding Tool.</strong><br/>
-  <sub>Visual AI Model Switching & Management for Developers</sub>
+  <sub>The hacker's control panel for the AI era.</sub>
 </p>
 
 <p align="center">

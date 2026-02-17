@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>One Hub. All Models. Every Coding Tool.</strong><br/>
-  <sub>WhichClaw ist eine Desktop-Anwendung, die eine</sub>
+  <sub>Das Hacker-Kontrollpanel für das KI-Zeitalter.</sub>
 </p>
 
 <p align="center">
@@ -18,14 +18,14 @@
 </p>
 
 <p align="center">
-  <a href="../README.md">English</a> · <a href="./README.zh-CN.md">简体中�?/a> · <a href="./README.zh-TW.md">繁體中文</a> · <a href="./README.ja.md">日本�?/a> · <a href="./README.ko.md">한국�?/a> · <a href="./README.es.md">Español</a> · <a href="./README.fr.md">Français</a> · **Deutsch** · <a href="./README.pt.md">Português</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.ar.md">العربية</a>
+  <a href="../README.md">English</a> · <a href="./README.zh-CN.md">简体中文</a> · <a href="./README.zh-TW.md">繁體中文</a> · <a href="./README.ja.md">日本語</a> · <a href="./README.ko.md">한국어</a> · <a href="./README.es.md">Español</a> · <a href="./README.fr.md">Français</a> · <strong>Deutsch</strong> · <a href="./README.pt.md">Português</a> · <a href="./README.ru.md">Русский</a> · <a href="./README.ar.md">العربية</a>
 </p>
 
 ---
 
-## �?Was ist WhichClaw?
+## ✨ Was ist WhichClaw?
 
-WhichClaw ist eine Desktop-Anwendung, die eine **visuelle, einheitliche Oberfläche** zur Verwaltung von KI-Modellen in deinen Programmier-Tools bietet. Kein Durchsuchen von Konfigurationsdateien mehr �?einfach klicken und wechseln.
+WhichClaw ist eine Desktop-Anwendung, die eine **visuelle, einheitliche Oberfläche** zur Verwaltung von KI-Modellen in deinen Programmier-Tools bietet. Kein Durchsuchen von Konfigurationsdateien mehr — einfach klicken und wechseln.
 
 ### Das Problem
 
@@ -37,34 +37,32 @@ WhichClaw ist eine Desktop-Anwendung, die eine **visuelle, einheitliche Oberflä
 
 WhichClaw fungiert als **zentrale Steuerungszentrale** für alle deine KI-Programmier-Tools:
 
-- 🎯 **Ein-Klick Modellwechsel** �?Visuell KI-Modelle für jedes unterstützte Tool wechseln
-- 🔀 **Dual-Protokoll** �?OpenAI & Anthropic API-Unterstützung, jederzeit und überall Modelle wechseln
-- 🚇 **Intelligenter Tunnel-Proxy** �?Zugriff auf geo-beschränkte APIs ohne vollständiges VPN; nur API-Traffic wird proxied
-- 🧩 **Skill-Browser** �?KI-Skills entdecken, installieren und verwalten
-- 🖥�?**Lokaler Modell-Server** �?Open-Source-Modelle (Qwen, DeepSeek, Llama) lokal über llama.cpp ausführen
-- 🌍 **28 Sprachen** �?Vollständige Internationalisierung
-- 🎮 **Integrierte KI-Apps** �?Interaktive KI-Spiele und Werkzeuge wie Reversi und AI Translate
-- 🌃 **Cyberpunk-Hacker-UI** �?Atemberaubende neongrüne Terminal-Ästhetik für futuristisches Programmieren
+- 🎯 **Ein-Klick Modellwechsel** — Visuell KI-Modelle für jedes unterstützte Tool wechseln
+- 🔀 **Dual-Protokoll** — OpenAI & Anthropic API-Unterstützung, jederzeit und überall Modelle wechseln
+- 🚇 **Intelligenter Tunnel-Proxy** — Zugriff auf geo-beschränkte APIs ohne vollständiges VPN
+- 🧩 **Skill-Browser** — KI-Skills entdecken, installieren und verwalten
+- 🖥️ **Lokaler Modell-Server** — Open-Source-Modelle (Qwen, DeepSeek, Llama) lokal über llama.cpp ausführen
+- 🌍 **28 Sprachen** — Vollständige Internationalisierung
+- 🎮 **Integrierte KI-Apps** — Interaktive KI-Spiele und Werkzeuge wie Reversi und AI Translate
+- 🌃 **Cyberpunk-Hacker-UI** — Atemberaubende neongrüne Terminal-Ästhetik
 
-## 🖼�?Screenshots
+## 🖼️ Screenshots
 
-### Model Nexus �?Alle KI-Modelle an einem Ort verwalten
+### Model Nexus — Alle KI-Modelle an einem Ort verwalten
 ![Model Nexus](1.png)
 
-### App Manager �?Ein-Klick Modellwechsel für alle Coding-Tools
+### App Manager — Ein-Klick Modellwechsel für alle Coding-Tools
 ![App Manager](2.png)
 
-### Local Server �?Open-Source-Modelle lokal mit llama.cpp ausführen
+### Local Server — Open-Source-Modelle lokal mit llama.cpp ausführen
 ![Local Server](3.png)
 
-### Skill Browser �?KI-Skills entdecken und installieren
+### Skill Browser — KI-Skills entdecken und installieren
 ![Skill Browser](4.png)
 
 ## 🚀 Schnellstart
 
 ### Download
-
-Hol dir die neueste Version für deine Plattform:
 
 | Plattform | Download |
 |----------|----------|
@@ -85,23 +83,25 @@ chmod +x WhichClaw-*.AppImage
 
 | Tool | Status | Modellwechsel | Protokoll |
 |------|--------|----------------|----------|
-| OpenClaw | �?Unterstützt | �?| OpenAI / Anthropic |
-| Claude Code | �?Unterstützt | �?| Anthropic |
-| Cline | �?Unterstützt | �?| OpenAI |
-| Continue | �?Unterstützt | �?| OpenAI |
-| OpenCode | �?Unterstützt | �?| OpenAI |
-| Codex | �?Unterstützt | �?| OpenAI |
-| Roo Code | �?Unterstützt | �?| OpenAI |
+| OpenClaw | ✅ Unterstützt | ✅ | OpenAI / Anthropic |
+| Claude Code | ✅ Unterstützt | ✅ | Anthropic |
+| Cline | ✅ Unterstützt | ✅ | OpenAI |
+| Continue | ✅ Unterstützt | ✅ | OpenAI |
+| OpenCode | ✅ Unterstützt | ✅ | OpenAI |
+| Codex | ✅ Unterstützt | ✅ | OpenAI |
+| Roo Code | ✅ Unterstützt | ✅ | OpenAI |
+| ZeroClaw | ✅ Unterstützt | ✅ | OpenAI |
+| Aider | ✅ Unterstützt | ✅ | OpenAI / Anthropic |
 
-## 🏗�?Tech-Stack
+## 🏗️ Tech-Stack
 
-- **Electron** �?Plattformübergreifendes Desktop-Framework
-- **React + TypeScript** �?UI-Framework
-- **Vanilla CSS** �?Benutzerdefiniertes Cyberpunk-Designsystem
-- **Vite** �?Build-Tool
-- **llama.cpp** �?Lokale Modell-Inferenz-Engine
+- **Electron** — Plattformübergreifendes Desktop-Framework
+- **React + TypeScript** — UI-Framework
+- **Vanilla CSS** — Benutzerdefiniertes Cyberpunk-Designsystem
+- **Vite** — Build-Tool
+- **llama.cpp** — Lokale Modell-Inferenz-Engine
 
-## 🛠�?Entwicklung
+## 🛠️ Entwicklung
 
 ```bash
 npm install
@@ -114,9 +114,9 @@ npm run build
 Beiträge sind willkommen! Erstelle gerne Issues oder sende Pull Requests.
 
 We're especially looking for help with:
-- 🍎 **macOS-Tests** �?Wir haben die macOS-Builds noch nicht vollständig getestet
-- 🔧 **Neue Tool-Integrationen** �?Hilf uns, mehr KI-Tools zu unterstützen
-- 🌐 **Übersetzungsverbesserungen** �?Muttersprachler willkommen!
+- 🍎 **macOS-Tests** — Wir haben die macOS-Builds noch nicht vollständig getestet
+- 🔧 **Neue Tool-Integrationen** — Hilf uns, mehr KI-Tools zu unterstützen
+- 🌐 **Übersetzungsverbesserungen** — Muttersprachler willkommen!
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -130,9 +130,9 @@ We're especially looking for help with:
 - 🐛 Bug Reports: [GitHub Issues](https://github.com/WhichClawTeam/WhichClaw/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/WhichClawTeam/WhichClaw/discussions)
 
-## �?Unterstützung
+## ⭐ Unterstützung
 
-Wenn du WhichClaw nützlich findest, gib bitte einen �?auf GitHub �?das hilft anderen, das Projekt zu entdecken!
+Wenn du WhichClaw nützlich findest, gib bitte einen ⭐ auf GitHub — das hilft anderen, das Projekt zu entdecken!
 
 ## 📄 Lizenz
 
