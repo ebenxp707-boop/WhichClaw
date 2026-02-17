@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>One Hub. All Models. Every Coding Tool.</strong><br/>
-  <sub>AI時代のハッカーコントロールパネル。</sub>
+  <sub>AI時代のサイバーパンクコントロールパネル。</sub>
 </p>
 
 <p align="center">

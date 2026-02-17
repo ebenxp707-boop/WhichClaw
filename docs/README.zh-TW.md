@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>One Hub. All Models. Every Coding Tool.</strong><br/>
-  <sub>AI 時代的駭客控制台。</sub>
+  <sub>AI 時代的賽博龐克控制台。</sub>
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@ WhichClaw 是你所有 AI 程式設計工具的**中央控制面板**：
 - 🖥️ **本地模型伺服器** — 透過 llama.cpp 本地執行開源模型（Qwen、DeepSeek、Llama）
 - 🌍 **28 種語言** — 完整國際化支援
 - 🎮 **內建 AI 應用** — 互動式 AI 遊戲和工具，如 Reversi 和 AI 翻譯
-- 🌃 **賽博龐克駭客 UI** — 炫酷的霓虹綠終端美學，讓程式設計充滿未來感
+- 🌃 **賽博龐克 UI** — 炫酷的霓虹綠終端美學，讓程式設計充滿未來感
 
 ## 🖼️ 截圖
 

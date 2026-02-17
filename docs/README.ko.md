@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>One Hub. All Models. Every Coding Tool.</strong><br/>
-  <sub>AI 시대의 해커 컨트롤 패널.</sub>
+  <sub>AI 시대의 사이버펑크 컨트롤 패널.</sub>
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@ WhichClaw는 모든 AI 코딩 도구의 **중앙 컨트롤 패널**입니다:
 - 🖥️ **로컬 모델 서버** — llama.cpp로 오픈소스 모델(Qwen, DeepSeek, Llama) 로컬 실행
 - 🌍 **28개 언어** — 완전한 국제화 지원
 - 🎮 **내장 AI 앱** — Reversi, AI 번역 등
-- 🌃 **사이버펑크 해커 UI** — 네온 그린 터미널 미학
+- 🌃 **사이버펑크 UI** — 네온 그린 터미널 미학
 
 ## 🖼️ 스크린샷
 
