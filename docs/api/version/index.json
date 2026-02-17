@@ -1,6 +1,6 @@
 {
-    "version": "1.0.1",
-    "releaseDate": "2026-02-16",
-    "releaseNotes": "Added ZeroClaw and Aider support, removed hardcoded tool list",
+    "version": "1.0.2",
+    "releaseDate": "2026-02-17",
+    "releaseNotes": "Added 160 automated tests, 27-language installer, SS crypto extraction, MIT license",
     "downloadUrl": "https://github.com/WhichClawTeam/WhichClaw/releases/latest"
 }
