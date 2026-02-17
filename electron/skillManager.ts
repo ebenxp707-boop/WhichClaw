@@ -1,11 +1,14 @@
 /**
  * Skill Manager - Skill Management Module
- * Dynamically fetch skills from GitHub, locally maintain category mapping
+ * Fetches skills catalog from remote API, with local fallback
  */
 
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+
+// Remote API endpoint
+const SKILLS_API_URL = 'https://whichclaw.com/api/skills/index.json';
 
 // Skill info type
 export interface SkillInfo {
@@ -18,12 +21,10 @@ export interface SkillInfo {
     description?: string;
 }
 
-// Skills mapping config type
-interface SkillsMapping {
-    sources: { id: string; name: string; repo: string; path: string }[];
-    categoryMapping: Record<string, string>;
-    defaultCategory: string;
-    briefOverrides: Record<string, string>;
+// Remote API response type
+interface SkillsCatalogResponse {
+    categories: string[];
+    skills: Omit<SkillInfo, 'installed'>[];
 }
 
 // Get skills installation directory (Cross-platform)
@@ -40,67 +41,28 @@ function getSkillsDirectory(): string {
     return agentsDir;
 }
 
-// Load category mapping from local config
-function loadSkillsMapping(): SkillsMapping {
-    try {
-        const mappingPath = path.join(__dirname, 'config', 'skillsMapping.json');
-        const mappingData = fs.readFileSync(mappingPath, 'utf-8');
-        return JSON.parse(mappingData);
-    } catch (error) {
-        console.error('[SkillManager] Failed to load skillsMapping.json:', error);
-        return {
-            sources: [{ id: 'anthropics', name: 'Anthropics Official', repo: 'anthropics/skills', path: 'skills' }],
-            categoryMapping: {},
-            defaultCategory: 'Other',
-            briefOverrides: {}
-        };
-    }
-}
-
-// Cache for fetched skills
+// Cache
 let cachedSkills: Omit<SkillInfo, 'installed'>[] = [];
+let cachedCategories: string[] = ['All'];
 let lastFetchTime = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 
-// Fetch skills from GitHub API
-async function fetchSkillsFromGitHub(): Promise<Omit<SkillInfo, 'installed'>[]> {
-    const mapping = loadSkillsMapping();
-    const allSkills: Omit<SkillInfo, 'installed'>[] = [];
-
-    for (const source of mapping.sources) {
-        try {
-            const url = `https://api.github.com/repos/${source.repo}/contents/${source.path}`;
-            console.log(`[SkillManager] Fetching from ${url}`);
-
-            const response = await fetch(url);
-            if (!response.ok) {
-                console.error(`[SkillManager] GitHub API error: ${response.status}`);
-                continue;
-            }
-
-            const items = await response.json() as Array<{ name: string; type: string }>;
-
-            for (const item of items) {
-                if (item.type === 'dir') {
-                    const skillId = item.name;
-                    const category = mapping.categoryMapping[skillId] || mapping.defaultCategory;
-                    const brief = mapping.briefOverrides[skillId] || `Skill from ${source.name}`;
-
-                    allSkills.push({
-                        id: skillId,
-                        name: skillId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-                        author: source.repo,
-                        category,
-                        brief
-                    });
-                }
-            }
-        } catch (error) {
-            console.error(`[SkillManager] Failed to fetch from ${source.repo}:`, error);
+// Fetch skills catalog from remote API (single request)
+async function fetchSkillsCatalog(): Promise<SkillsCatalogResponse | null> {
+    try {
+        console.log(`[SkillManager] Fetching catalog from ${SKILLS_API_URL}`);
+        const response = await fetch(SKILLS_API_URL, { signal: AbortSignal.timeout(8000) });
+        if (!response.ok) {
+            console.error(`[SkillManager] API error: ${response.status}`);
+            return null;
         }
+        const data = await response.json() as SkillsCatalogResponse;
+        console.log(`[SkillManager] Fetched ${data.skills.length} skills, ${data.categories.length} categories`);
+        return data;
+    } catch (error) {
+        console.error('[SkillManager] Failed to fetch catalog:', error);
+        return null;
     }
-
-    return allSkills;
 }
 
 // Load skills with caching
@@ -112,33 +74,35 @@ async function loadSkillsCatalog(): Promise<Omit<SkillInfo, 'installed'>[]> {
         return cachedSkills;
     }
 
-    // Try to fetch from GitHub
-    const freshSkills = await fetchSkillsFromGitHub();
+    // Try remote API (single fetch)
+    const data = await fetchSkillsCatalog();
 
-    if (freshSkills.length > 0) {
-        cachedSkills = freshSkills;
+    if (data && data.skills.length > 0) {
+        cachedSkills = data.skills;
+        cachedCategories = data.categories;
         lastFetchTime = now;
-        console.log(`[SkillManager] Fetched ${freshSkills.length} skills from GitHub`);
         return cachedSkills;
     }
 
-    // Fallback to local cache file if exists
+    // Fallback to local cache file
     try {
         const cachePath = path.join(__dirname, 'config', 'skills.json');
         if (fs.existsSync(cachePath)) {
             const cacheData = fs.readFileSync(cachePath, 'utf-8');
-            cachedSkills = JSON.parse(cacheData);
-            console.log(`[SkillManager] Using cached skills.json (${cachedSkills.length} skills)`);
+            const parsed = JSON.parse(cacheData) as SkillsCatalogResponse;
+            cachedSkills = parsed.skills || [];
+            if (parsed.categories) cachedCategories = parsed.categories;
+            console.log(`[SkillManager] Using local fallback (${cachedSkills.length} skills)`);
             return cachedSkills;
         }
     } catch (error) {
-        console.error('[SkillManager] Failed to load fallback cache:', error);
+        console.error('[SkillManager] Failed to load fallback:', error);
     }
 
     return [];
 }
 
-// Initialize skills catalog (async)
+// Initialize skills catalog (async, singleton)
 let skillsCatalogPromise: Promise<Omit<SkillInfo, 'installed'>[]> | null = null;
 
 function getSkillsCatalog(): Promise<Omit<SkillInfo, 'installed'>[]> {
@@ -148,7 +112,7 @@ function getSkillsCatalog(): Promise<Omit<SkillInfo, 'installed'>[]> {
     return skillsCatalogPromise;
 }
 
-// Force refresh skills from GitHub
+// Force refresh
 export async function refreshSkillsCatalog(): Promise<number> {
     lastFetchTime = 0;
     skillsCatalogPromise = null;
@@ -167,7 +131,6 @@ export function getInstalledSkillIds(): string[] {
     }
 
     try {
-        // Read directory names in skills directory
         const entries = fs.readdirSync(skillsDir, { withFileTypes: true });
         return entries
             .filter(entry => entry.isDirectory() || entry.name.endsWith('.md'))
@@ -211,7 +174,6 @@ export function getToolInstalledSkills(skillsPath: string): InstalledSkillInfo[]
                 let description = '';
                 let hasReadme = false;
 
-                // Try reading first line of SKILL.md or README.md as description
                 if (fs.existsSync(readmePath)) {
                     hasReadme = true;
                     try {
@@ -273,10 +235,12 @@ export async function getSkillsByCategory(category: string): Promise<SkillInfo[]
 }
 
 /**
- * Get all categories
+ * Get all categories (from remote API, with fallback)
  */
 export function getSkillCategories(): string[] {
-    return ['All', 'Development', 'Marketing', 'Design', 'Research', 'AI/ML', 'Finance'];
+    return cachedCategories.length > 1
+        ? cachedCategories
+        : ['All', 'Workflow', 'Testing', 'Debugging', 'Development', 'Design', 'Productivity', 'Marketing', 'Research', 'AI/ML', 'Finance'];
 }
 
 /**
