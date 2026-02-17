@@ -1,6 +1,6 @@
 {
-    "version": "1.0.4",
-    "releaseDate": "2026-02-17",
-    "releaseNotes": "Fixed NSIS installer header, fixed Skills GitHub 404 links",
+    "version": "1.0.5",
+    "releaseDate": "2026-02-18",
+    "releaseNotes": "Fixed WebSocket origin for production builds (OpenClaw connectivity)",
     "downloadUrl": "https://github.com/WhichClawTeam/WhichClaw/releases/latest"
 }
