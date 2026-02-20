@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <title>CyberNexus</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/Orbitron-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-display: block;
+        }
 
         * {
             margin: 0;
@@ -44,10 +49,11 @@
 
         .title {
             color: #00FF9D;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            letter-spacing: 2px;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            letter-spacing: 3px;
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            text-transform: uppercase;
         }
 
         .loader {
@@ -102,7 +108,7 @@
 <body>
     <div class="splash-card">
         <img class="logo" src="ico.svg" alt="">
-        <div class="title">CyberNexus</div>
+        <div class="title">CYBER NEXUS</div>
         <div class="loader">
             <span></span>
             <span></span>

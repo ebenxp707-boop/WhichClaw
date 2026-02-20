@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── 页面标题 & 关键按钮 — Noto Sans 全语言通用 ── */
+/* ── Local Font Faces ── */
+@font-face { font-family: 'Inter'; src: url('/fonts/Inter-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('/fonts/Inter-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('/fonts/Inter-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('/fonts/Inter-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/JetBrainsMono-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/JetBrainsMono-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/JetBrainsMono-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+@font-face { font-family: 'Orbitron'; src: url('/fonts/Orbitron-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+@font-face { font-family: 'Noto Sans'; src: url('/fonts/NotoSans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* ── Page titles — Noto Sans with system-ui fallback for all scripts ── */
 .cjk-title,
 .cjk-btn {
-  font-family: 'Noto Sans', 'Noto Sans SC', 'Noto Sans TC', 'Inter', sans-serif;
+  font-family: 'Noto Sans', system-ui, sans-serif;
   font-weight: 700;
 }
 
@@ -28,7 +42,7 @@ button:focus-visible {
 }
 
 body {
-  font-family: 'Inter', 'Manrope', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background-color: #0F1117;
   color: #E0F7FA;
   overflow: hidden;
@@ -41,7 +55,7 @@ body {
 
 code,
 pre {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* Hide scrollbar but keep scrolling */

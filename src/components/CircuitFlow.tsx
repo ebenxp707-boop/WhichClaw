@@ -4,28 +4,51 @@ import { useEffect, useRef } from 'react';
  * Clean grid-line light pulse animation.
  * Glowing dots travel along the existing CSS grid lines (H/V only),
  * never crossing. Creates a calm, structured cyberpunk aesthetic.
+ *
+ * Channel-aware mode:
+ *   Pass `channels` prop to drive pulse count & color from channel status.
+ *   - 'ok'    → green pulse (cyber-accent)
+ *   - 'error' → red pulse
+ *   When channels is undefined or empty, falls back to default ambient mode.
  */
 
-const GRID = 40;                // match CSS grid-bg size
-const R = 0, G = 255, B = 157; // cyber-accent
-const MAX_PULSES = 8;
-const SPAWN_EVERY = 30;         // frames between spawns (~1s)
-const SPEED = 2.5;              // px per frame
-const TRAIL = 160;              // trail length in px
-const HEAD_R = 2.5;             // head dot radius
+const GRID = 40;
+const COLOR_OK: [number, number, number] = [0, 255, 157];    // cyber-accent green
+const COLOR_ERR: [number, number, number] = [255, 60, 60];   // error red
+const DEFAULT_MAX = 8;
+const SPAWN_EVERY = 30;
+const SPEED = 2.5;
+const TRAIL = 160;
+const HEAD_R = 2.5;
 const TARGET_FPS = 30;
 const FRAME_MS = 1000 / TARGET_FPS;
 
+// ── Public interface ──────────────────────────────────────────
+export interface ChannelPulseStatus {
+    id: number;
+    status: 'ok' | 'error';
+}
+
+export interface CircuitFlowProps {
+    /** Channel status list — drives pulse count & color.
+     *  undefined/empty = default ambient mode (random green pulses). */
+    channels?: ChannelPulseStatus[];
+}
+
+// ── Internal types ────────────────────────────────────────────
 interface Pulse {
     x: number;
     y: number;
-    dx: number;       // 1, -1, or 0
-    dy: number;       // 1, -1, or 0
-    life: number;     // remaining distance in px
+    dx: number;
+    dy: number;
+    life: number;
+    color: [number, number, number];
 }
 
-export function CircuitFlow() {
+export function CircuitFlow({ channels }: CircuitFlowProps = {}) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const channelsRef = useRef(channels);
+    channelsRef.current = channels;
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -56,36 +79,76 @@ export function CircuitFlow() {
         ro.observe(canvas.parentElement!);
         resize();
 
-        const spawn = () => {
-            if (pulses.length >= MAX_PULSES) return;
-
+        const spawnPulse = (color: [number, number, number]) => {
             const horizontal = Math.random() < 0.5;
-
             if (horizontal) {
-                // Travel along a horizontal grid line
                 const rows = Math.floor(h / GRID);
                 const row = (Math.floor(Math.random() * rows) + 1) * GRID;
                 const goRight = Math.random() < 0.5;
                 pulses.push({
                     x: goRight ? -TRAIL : w + TRAIL,
-                    y: row,
-                    dx: goRight ? 1 : -1,
-                    dy: 0,
-                    life: w + TRAIL * 2,
+                    y: row, dx: goRight ? 1 : -1, dy: 0,
+                    life: w + TRAIL * 2, color,
                 });
             } else {
-                // Travel along a vertical grid line
                 const cols = Math.floor(w / GRID);
                 const col = (Math.floor(Math.random() * cols) + 1) * GRID;
                 const goDown = Math.random() < 0.5;
                 pulses.push({
                     x: col,
                     y: goDown ? -TRAIL : h + TRAIL,
-                    dx: 0,
-                    dy: goDown ? 1 : -1,
-                    life: h + TRAIL * 2,
+                    dx: 0, dy: goDown ? 1 : -1,
+                    life: h + TRAIL * 2, color,
                 });
             }
+        };
+
+        /** Spawn logic — channel-aware or default */
+        const spawn = () => {
+            const chs = channelsRef.current;
+            if (chs && chs.length > 0) {
+                // Channel mode: maintain exactly one pulse per channel
+                // Only spawn if we have fewer pulses than channels
+                if (pulses.length < chs.length) {
+                    const ch = chs[pulses.length % chs.length];
+                    spawnPulse(ch.status === 'error' ? COLOR_ERR : COLOR_OK);
+                }
+            } else {
+                // Default ambient mode
+                if (pulses.length < DEFAULT_MAX) {
+                    spawnPulse(COLOR_OK);
+                }
+            }
+        };
+
+        const drawPulse = (p: Pulse) => {
+            const [r, g, b] = p.color;
+            const tailX = p.x - p.dx * TRAIL;
+            const tailY = p.y - p.dy * TRAIL;
+
+            const grad = ctx.createLinearGradient(tailX, tailY, p.x, p.y);
+            grad.addColorStop(0, `rgba(${r},${g},${b},0)`);
+            grad.addColorStop(0.6, `rgba(${r},${g},${b},0.12)`);
+            grad.addColorStop(1, `rgba(${r},${g},${b},0.4)`);
+
+            ctx.beginPath();
+            ctx.moveTo(tailX, tailY);
+            ctx.lineTo(p.x, p.y);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Head glow
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, HEAD_R, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},0.8)`;
+            ctx.fill();
+
+            // Soft outer glow
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},0.12)`;
+            ctx.fill();
         };
 
         const frame = (ts: number) => {
@@ -96,10 +159,8 @@ export function CircuitFlow() {
 
             ctx.clearRect(0, 0, w, h);
 
-            // Spawn
             if (tick % SPAWN_EVERY === 0) spawn();
 
-            // Update & draw
             for (let i = pulses.length - 1; i >= 0; i--) {
                 const p = pulses[i];
                 p.x += p.dx * SPEED;
@@ -110,38 +171,11 @@ export function CircuitFlow() {
                     pulses.splice(i, 1);
                     continue;
                 }
-
-                // Draw trail as gradient line
-                const tailX = p.x - p.dx * TRAIL;
-                const tailY = p.y - p.dy * TRAIL;
-
-                const grad = ctx.createLinearGradient(tailX, tailY, p.x, p.y);
-                grad.addColorStop(0, `rgba(${R},${G},${B},0)`);
-                grad.addColorStop(0.6, `rgba(${R},${G},${B},0.12)`);
-                grad.addColorStop(1, `rgba(${R},${G},${B},0.4)`);
-
-                ctx.beginPath();
-                ctx.moveTo(tailX, tailY);
-                ctx.lineTo(p.x, p.y);
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                // Head glow
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, HEAD_R, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${R},${G},${B},0.8)`;
-                ctx.fill();
-
-                // Soft outer glow
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${R},${G},${B},0.12)`;
-                ctx.fill();
+                drawPulse(p);
             }
         };
 
-        // Seed several at start for immediate visibility
+        // Seed initial pulses
         for (let i = 0; i < 4; i++) spawn();
         rafId = requestAnimationFrame(frame);
 
@@ -155,7 +189,7 @@ export function CircuitFlow() {
         <canvas
             ref={canvasRef}
             className="absolute inset-0 pointer-events-none"
-            style={{ zIndex: 0 }}
+            style={{ zIndex: -1 }}
         />
     );
 }

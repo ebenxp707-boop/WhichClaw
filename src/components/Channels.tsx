@@ -529,7 +529,7 @@ export const Channels: React.FC = () => {
                                 onClick={() => selectChannel(ch.id)}
                                 className={`w-full text-left p-3 transition-all font-mono border rounded-card cursor-pointer ${isActive
                                     ? 'border-cyber-accent bg-cyber-accent/10 shadow-cyber-card'
-                                    : 'border-cyber-border/40 bg-black/20 hover:border-cyber-accent/30 hover:bg-black/40'
+                                    : 'border-cyber-border/40 bg-black/80 hover:border-cyber-accent/30 hover:bg-black/90'
                                     }`}
                             >
                                 {/* Status */}
@@ -550,7 +550,7 @@ export const Channels: React.FC = () => {
                                             ref={nameInputRef}
                                             type="text"
                                             defaultValue={ch.name}
-                                            placeholder={`Claw Channel #${String(ch.id).padStart(2, '0')}`}
+                                            placeholder={`Agent Channel #${String(ch.id).padStart(2, '0')}`}
                                             onBlur={(e) => {
                                                 updateName(ch.id, e.target.value.trim());
                                                 setEditingNameId(null);
@@ -567,7 +567,7 @@ export const Channels: React.FC = () => {
                                     ) : (
                                         <>
                                             <span className={`text-sm font-bold whitespace-nowrap truncate ${isActive ? 'text-cyber-accent' : 'text-cyber-accent/70'}`}>
-                                                {ch.name || `Claw Channel #${String(ch.id).padStart(2, '0')}`}
+                                                {ch.name || `Agent Channel #${String(ch.id).padStart(2, '0')}`}
                                             </span>
                                             {isActive && (
                                                 <button
@@ -654,7 +654,7 @@ export const Channels: React.FC = () => {
                                 <div className="space-y-1 select-none">
                                     <p className="text-cyber-accent">[SYS] Channels online</p>
                                     <p className="text-cyber-text-secondary">$ echo $CHANNEL</p>
-                                    <p className="text-cyber-accent/80">Claw Channel #{String(activeChannel.id).padStart(2, '0')}</p>
+                                    <p className="text-cyber-accent/80">Agent Channel #{String(activeChannel.id).padStart(2, '0')}</p>
                                     <p className="text-cyber-text-secondary">$ echo $PROTOCOL</p>
                                     <p className="text-cyber-accent/80">{activeChannel.protocol.replace('://', '').toUpperCase()} · {activeChannel.address}</p>
                                     <p className="text-cyber-text-secondary mt-2">$ connect --handshake</p>

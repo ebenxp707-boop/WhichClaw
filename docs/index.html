@@ -15,7 +15,7 @@
     <meta property="og:image" content="icon.png">
     <link rel="icon" href="icon.png" type="image/png">
     <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -92,11 +92,12 @@
         }
 
         .nav-logo span {
-            font-family: var(--mono);
-            font-weight: 800;
+            font-family: 'Orbitron', var(--mono);
+            font-weight: 700;
             font-size: 16px;
             color: var(--neon);
-            letter-spacing: -0.5px
+            letter-spacing: 2px;
+            text-transform: uppercase
         }
 
         .nav-r {
@@ -149,7 +150,7 @@
         }
 
         .hero-left {
-            flex: 0 0 380px;
+            flex: 0 0 420px;
             text-align: left
         }
 
@@ -211,12 +212,14 @@
         }
 
         .hero h1 {
-            font-family: var(--mono);
+            font-family: 'Orbitron', var(--mono);
             font-size: clamp(32px, 4vw, 48px);
-            font-weight: 800;
-            letter-spacing: -2px;
+            font-weight: 700;
+            letter-spacing: 3px;
             line-height: .95;
             margin-bottom: 16px;
+            text-transform: uppercase;
+            white-space: nowrap;
             background: linear-gradient(135deg, var(--neon) 0%, var(--neon2) 50%, var(--neon) 100%);
             background-size: 200% 200%;
             -webkit-background-clip: text;
@@ -242,7 +245,7 @@
             font-weight: 300;
             color: var(--dim);
             margin-bottom: 28px;
-            max-width: 400px;
+            max-width: 420px;
             letter-spacing: -0.2px;
             line-height: 1.5
         }
@@ -701,7 +704,7 @@
 
     <!-- Nav -->
     <div class="nav">
-        <a href="#" class="nav-logo"><img src="icon.png" alt=""><span>CyberNexus</span></a>
+        <a href="#" class="nav-logo"><img src="icon.png" alt=""><span>CYBER NEXUS</span></a>
         <div class="nav-r">
             <a href="#features" data-i18n="nav_features">Features</a>
             <a href="#screenshots" data-i18n="nav_screenshots">Screenshots</a>
@@ -728,7 +731,7 @@
         <div class="hero-glow"></div>
         <div class="hero-left">
             <img src="icon.png" alt="CyberNexus" class="hero-icon">
-            <h1>CyberNexus</h1>
+            <h1>CYBER NEXUS</h1>
             <p class="hero-tagline" data-i18n="hero_tag"><strong>One Hub.</strong> All Models. Every Coding Tool.</p>
             <div class="hero-actions">
                 <a href="#download" class="btn btn-g" data-i18n="hero_dl">Download for Free</a>

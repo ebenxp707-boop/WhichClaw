@@ -23,7 +23,7 @@ export const ToolCard = ({ id, name, version, installed, path, configPath, skill
     const displayName = (names && locale !== 'en' && names[locale]) || name;
     return (
         <div
-            className={`p-5 border ${selected ? 'border-cyber-accent shadow-[0_0_10px_rgba(0,255,157,0.3)]' : 'border-cyber-border shadow-cyber-card'} relative overflow-hidden rounded-card ${installed ? 'cursor-pointer hover:bg-black/40' : 'cursor-default opacity-80'} transition-all bg-black/20 flex flex-col`}
+            className={`p-5 border ${selected ? 'border-cyber-accent shadow-[0_0_10px_rgba(0,255,157,0.3)]' : 'border-cyber-border shadow-cyber-card'} relative overflow-hidden rounded-card ${installed ? 'cursor-pointer hover:bg-black/90' : 'cursor-default opacity-80'} transition-all bg-black/80 flex flex-col`}
             onClick={installed ? onClick : undefined}
         >
             {/* 工具图标：右上角 */}

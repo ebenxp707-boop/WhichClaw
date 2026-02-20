@@ -1,6 +1,6 @@
 {
-    "version": "1.0.8",
+    "version": "1.0.9",
     "releaseDate": "2026-02-20",
-    "releaseNotes": "Rebrand to CyberNexus, updated UI branding with cyberpunk font styling",
+    "releaseNotes": "Font localization (offline support), website brand font update, UI polish",
     "downloadUrl": "https://github.com/CyberNexus-Chat/CyberNexus/releases/latest"
 }

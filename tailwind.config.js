@@ -19,8 +19,8 @@ export default {
                 'cyber-text-muted': '#A8B5C8',
             },
             fontFamily: {
-                mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-                sans: ['Inter', 'Manrope', 'sans-serif'],
+                mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+                sans: ['Inter', 'system-ui', 'sans-serif'],
             },
             borderRadius: {
                 'card': '8px',

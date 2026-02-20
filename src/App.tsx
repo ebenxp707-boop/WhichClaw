@@ -667,13 +667,14 @@ function App() {
                         <div className="flex flex-col h-screen w-full bg-cyber-bg">
                             {/* 自定义标题栏 */}
                             <TitleBar onSettingsClick={() => setShowSettings(true)} />
-                            <div className="flex flex-1 overflow-hidden text-cyber-accent font-mono p-4 gap-4 grid-bg relative">
+                            <div className="flex flex-1 overflow-hidden text-cyber-accent font-mono p-4 gap-4 grid-bg relative isolate">
+                                {/* TODO: pass channels={[{id,status:'ok'|'error'}]} when OpenClaw plugin channels are ready */}
                                 <CircuitFlow />
-                                {/* Content layer - above circuit canvas */}
+                                {/* Sidebar */}
                                 <Sidebar activePage={activePage} onPageChange={setActivePage} showLogsPage={showLogsPage} />
 
                                 {/* Main content wrapper */}
-                                <div className="flex-1 flex flex-col overflow-hidden relative z-[1]">
+                                <div className="flex-1 flex flex-col overflow-hidden">
                                     {/* Main + Right panel row */}
                                     <div className="flex-1 flex gap-3 overflow-hidden">
                                         <main className="flex-1 flex flex-col overflow-hidden">
@@ -710,7 +711,7 @@ function App() {
                                                                 placeholder={t('search.skills')}
                                                                 value={skillSearchQuery}
                                                                 onChange={(e) => setSkillSearchQuery(e.target.value)}
-                                                                className="w-48 h-7 bg-black/20 border border-cyber-border px-3 text-xs text-cyber-text placeholder-cyber-text-muted focus:border-cyber-warning focus:outline-none transition-colors"
+                                                                className="w-48 h-7 bg-black/80 border border-cyber-border px-3 text-xs text-cyber-text placeholder-cyber-text-muted focus:border-cyber-warning focus:outline-none transition-colors"
                                                             />
                                                             <button
                                                                 onClick={() => loadSkills(true)}
@@ -917,7 +918,7 @@ function App() {
                                                                     [...Array(8)].map((_, i) => (
                                                                         <div
                                                                             key={i}
-                                                                            className="p-3 border border-cyber-warning/20 bg-black/20 animate-pulse"
+                                                                            className="p-3 border border-cyber-warning/20 bg-black/80 animate-pulse"
                                                                         >
                                                                             <div className="h-4 bg-cyber-warning/20 w-3/4 mb-2"></div>
                                                                             <div className="h-3 bg-cyber-warning/10 w-1/2"></div>
@@ -933,7 +934,7 @@ function App() {
                                                                     filteredSkills.map(skill => (
                                                                         <div
                                                                             key={skill.id}
-                                                                            className={`p-3 border-l-2 border ${selectedSkill === skill.id ? 'border-l-cyber-warning border-cyber-warning bg-cyber-warning/10' : 'border-l-cyber-border border-cyber-border hover:border-l-cyber-warning/50'} cursor-pointer hover:border-cyber-warning/50 transition-all bg-black/20 flex items-center justify-between group`}
+                                                                            className={`p-3 border-l-2 border ${selectedSkill === skill.id ? 'border-l-cyber-warning border-cyber-warning bg-cyber-warning/10' : 'border-l-cyber-border border-cyber-border hover:border-l-cyber-warning/50'} cursor-pointer hover:border-cyber-warning/50 transition-all bg-black/80 flex items-center justify-between group`}
                                                                             onClick={() => setSelectedSkill(skill.id)}
                                                                         >
                                                                             <div className="min-w-0 flex-1">
@@ -1250,7 +1251,7 @@ function App() {
                                                             )}
                                                         </div>
                                                         {selectedSkillData && (
-                                                            <div className="p-3 bg-black/20 border-t border-cyber-border">
+                                                            <div className="p-3 bg-black/80 border-t border-cyber-border">
                                                                 <span
                                                                     onClick={(e) => { e.preventDefault(); (window as any).electron?.openExternal(`https://github.com/${selectedSkillData.author}/tree/main/skills/${selectedSkillData.id}`); }}
                                                                     className="w-full py-2 text-sm font-bold transition-colors bg-cyber-warning text-black hover:bg-cyber-warning/80 flex items-center justify-center gap-2 cursor-pointer"
